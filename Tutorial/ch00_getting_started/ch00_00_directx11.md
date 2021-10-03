@@ -1,0 +1,19 @@
+# DirectX 11
+
+在我们开始学习DirectX 11的开始，我们需要知道的是DirectX11它的的确确是由微软提供的一套图形编程的API。作者的学习经历是先从OpenGL开始的，然后才开始接触了DX11，DX12，vulkan。虽然OpenGL的图形API是我接触到现在以来感觉最难使用的，也是最容易写出不优雅的代码的一套API。但是我依然推荐任何一位从来没有接触过图形编程的人，先从OpenGL开始学习，然后是DX11，至于DX12和vulkan当有需要的时候再去学习。会省下很多不必要的时间。我认识有不少做仿真，流体模拟等物理计算其实固定管线的OpenGL对于他们已经足够满足他们的需求来。
+
+不同于OpenGL，只是由Khronos组织制定并维护的规范，换句话说，你在不同的硬件平台下，OpenGL的实现完全是依赖厂商的自我约束。经常会发生厂商宣传硬件已经支持到了某一个标准，但是实际上支持地并不完整。这种情况在PC上发生的概率比较低，消费者用户一般也就会遇到三家厂商，基本是很少会遇到问题。但是如果有OpenGL ES的开发经历，就会知道，这回事一个经常发生的事件。很多手机会宣称自己已经支持了OpenGL ES3.0，然后莫名地uniform不能支持矩阵的格式，或者种种别的奇怪情况。这一切在DirectX的学习中都不会发生。因为只需要你的设别能够使用Windows，微软就对显卡厂商的驱动和硬件做了强制的规定，能符合DirectX11标准的驱动以及硬件才会被允许在登录windows平台。换句话说，在DirectX中只要你的SDK和硬件说支持一些特性，那么这个特效一定是会被支持的。
+
+# 接口风格
+DirectX 的接口是COM的C++接口，同时微软也提供了对应的C接口。后续可能会出现一些这里没有被说明到的接口，可以直接参考
+[微软文档](https://docs.microsoft.com/en-us/windows/win32/direct3d11/atoc-dx-graphics-direct3d-11)，这是最全面的文档说明。
+
+COM接口都是继承于IUnknown会使用一种不同于std::shared_ptr或者std::unique_ptr的COM智能指针。调用函数AddRef和Release增加和减少对象的引用计数。
+
+## 对象化
+和OpenGL比起来，DirectX的接口，就现代了很多。比如OpenGL想要设置一个深度检测的方式（后面会提到），需要一个参数一个函数的方式调用。DirectX可以直接通过描述符，生成对应的对象，然后绑定对应的对象，就可以实现。
+DirectX有几个比较关键的对象。ID3D11Device，ID3D11DeviceContext。所有的对象都是通过ID3D11Device创建，然后图形调用会使用ID3D11DeviceContext。比如我们想要创建一张贴图，就需要用ID3D11Device->CreateTexture2D()创建ID3D11Texture2D对象，然后用ID3D11Device->CreateShaderResourceView()创建ID3D11Texture2D的SRV。
+最后使用接口ID3D11DeviceContext->PSSetShaderResources()，设置这个对象给pixel shader。根据在shader中不同的作用，视图会分为ShaderResourceView，UnorderedAccessView，RenderTargetView，DepthStencilView，教程后面会详细地说明这件事情。现在我们只需要对DirectX是如何工作的，有一个大概的认识就可以了。
+
+ ## 尾声
+ 更详细的DirectX概念的介绍，会随着教程的推进慢慢地向读者介绍，直接一上来就介绍太多内容对于初学者来说过于不友好。
