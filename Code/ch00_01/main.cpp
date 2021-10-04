@@ -8,7 +8,7 @@
 using namespace std;
 int main(int argc, char* argv[])
 {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         printf("Error: %s\n", SDL_GetError());
         return -1;
@@ -26,7 +26,11 @@ int main(int argc, char* argv[])
         window_width,
         window_height,
         window_flags);
-
+    if (window == nullptr)
+    {
+        printf("SDL Create window failed");
+        return -1;
+    }
     bool close_window = false;
 
     while (!close_window)

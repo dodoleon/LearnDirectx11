@@ -170,7 +170,7 @@ SwapChainView CreateSwapChainTextureView(CComPtr<ID3D11Device> device, CComPtr<I
 
 int main(int argc, char* argv[])
 {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         printf("Error: %s\n", SDL_GetError());
         return -1;
@@ -188,7 +188,11 @@ int main(int argc, char* argv[])
         window_width,
         window_height,
         window_flags);
-
+    if (window == nullptr)
+    {
+        printf("SDL Create window failed");
+        return -1;
+    }
     SDL_SysWMinfo wmInfo;
     SDL_VERSION(&wmInfo.version);
     SDL_GetWindowWMInfo(window, &wmInfo);
