@@ -5,15 +5,17 @@ Tutorial of Directx11
 
 出于这个原因开始编写这份教程。
 
-## 需要的编程环境
-- Windows 7/10/11 
-- visual studio 15/17/19
-- cmake
+第一版的教程中，不会涉及到一些矩阵或者库相关的问题，有问题可以自行到[LearnOpenGL](https://learnopengl.com/)中查看相关的教程。后续会补充上，以及我在做图形开发的过程中遇到的经验。比如ReverseZ DepthMap之类的方法。
 
-教程会按照Windows 10和 visual studio 19 社区版开始。
+## 需要的编程环境
+- Windows 7/10(作者用的版本)/11 
+- visual studio 17/19(作者用的版本)
+- cmake v3.12以上
+
+教程会按照Windows 10和 visual studio 19 社区版开始。也有可能会有读者是在Windows 7上开发，出现了错误可以在issue中提。
 
 ## 需要的前置学习背景
-需要一定的C++语言能力，如果还没有学习过c++的话，推荐去网易云课堂翁恺老师开设的免费课程[程序设计入门—C语言](https://mooc.study.163.com/course/1000002011?tid=2403041004&_trace_c_p_k2_=9c151c4bd24f4164b48e91f30f3e4d15#/info)。虽然我会使用C++作为教程的编程语言。但是基本上是C with class 的形式。不会涉及到很复杂的C++特性，所以学习C语言，基本就可以满足大部分的要求了。
+需要一定的C++语言能力，如果还没有学习过c++的话，推荐去网易云课堂或者别的地方提前学习一下C++。代码基本上是按照C++17的标准来写的。
 
 构建工具使用了CMake，如果还没有学习过，可以上[modern-cmake](https://cliutils.gitlab.io/modern-cmake/) 学习一下。教程中我也会简单的step by step教学CMake怎么写以及为什么这么写。
 ## 你可以学习到什么
@@ -28,11 +30,12 @@ Tutorial of Directx11
 
 ## 如何获取源代码以及编译
 源代码在Code文件夹中，因为DirectX一定是需要Windows SDK的支持。这里直接默认是使用visual studio以及它的编译器。不支持mingw，gcc等其他的编译器，可能可以，但是会比较麻烦。
-```bash
+```powershell
 git clone https://github.com/dodoleon/LearnDirectx11.git
-cd LearnDirectx11/Code
-mkdir build
-cd build
+cd LearnDirectx11
+git submodule update --init
+mkdir Code/build
+cd Code/build
 cmake ..
 ```
 
